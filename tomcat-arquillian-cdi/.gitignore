@@ -1,0 +1,17 @@
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+#IDE files
+.project
+.classpath
+*.iml
+
+#build folder
+/target
+/.settings
+/.idea
+/.idea/artifacts
