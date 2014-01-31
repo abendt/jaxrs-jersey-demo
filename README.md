@@ -10,5 +10,5 @@ a JAX-RS application can be set up using
 * Spring or CDI to use dependency injection
 
 Have a look at the different modules.
-Run the test using
+Run the tests using
 mvn test
