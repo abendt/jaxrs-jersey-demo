@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     
     <modules>
+        <module>tomcat-embed-logging-slf4j</module>
         <module>tomcat-arquillian</module>
         <module>tomcat-arquillian-spring</module>
         <module>tomcat-arquillian-spring-spock</module>
