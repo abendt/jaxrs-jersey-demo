@@ -1,17 +1,20 @@
 package example.module1
 
-import arquillian.AbstractSpecification
+import arquillian.DeploymentBuilder
 import example.core.MyService
-import example.module1.MyResource
 import org.jboss.arquillian.container.test.api.Deployment
+import org.jboss.arquillian.spock.ArquillianSputnik
 import org.jboss.arquillian.test.api.ArquillianResource
 import org.jboss.shrinkwrap.api.spec.WebArchive
+import org.junit.runner.RunWith
+import spock.lang.Specification
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.WebTarget
 
-class MyResourceSpec extends AbstractSpecification {
+@RunWith(ArquillianSputnik)
+class MyResourceSpec extends Specification {
 
     @ArquillianResource
     private URL baseURL;
@@ -21,7 +24,7 @@ class MyResourceSpec extends AbstractSpecification {
      */
     @Deployment(testable = false)
     public static WebArchive createTestArchive() {
-        AbstractSpecification.baseDeployment().addClass(MyResource).addClass(MyService)
+        new DeploymentBuilder().build().addPackage(MyResource.class.getPackage()).addClass(MyService)
     }
 
     def setup() {

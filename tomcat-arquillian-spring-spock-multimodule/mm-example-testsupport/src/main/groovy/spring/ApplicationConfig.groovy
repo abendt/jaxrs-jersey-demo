@@ -6,8 +6,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
 
-@ComponentScan(basePackages = "example",
-        excludeFilters = [@ComponentScan.Filter(Configuration.class)])
+@ComponentScan(basePackages = "example" )
 
 @EnableTransactionManagement(proxyTargetClass = true)
 class ApplicationConfig {

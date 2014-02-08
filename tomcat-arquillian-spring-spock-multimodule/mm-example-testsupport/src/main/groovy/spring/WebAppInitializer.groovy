@@ -17,6 +17,7 @@ class WebAppInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext rootContext =
             new AnnotationConfigWebApplicationContext()
         rootContext.register(ApplicationConfig.class)
+        rootContext.scan("example")
 
         // Manage the lifecycle of the root application context
         container.addListener(new ContextLoaderListener(rootContext));
