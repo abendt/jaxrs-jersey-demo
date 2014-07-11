@@ -1,5 +1,19 @@
 class logbook::install {
   
+  wget::fetch { 'kibana-download':
+    source => 'http://download.elasticsearch.org/kibana/kibana/kibana-latest.tar.gz',
+    destination => '/home/vagrant/kibana-latest.tar.gz',
+    timeout     => 0,
+    verbose     => false,
+ }
+ ->
+ exec {'kibana-untar':
+    creates     => "/home/vagrant/kibana-latest",
+    cwd         => "/home/vagrant",
+    command     => "tar xzf kibana-latest.tar.gz",
+    path        => ["/usr/bin", "/bin"],
+    }   
+
     class { 'elasticsearch':
         manage_repo  => true,
         repo_version => '1.2',
@@ -8,21 +22,13 @@ class logbook::install {
         java_install => true
     }
         
-    /*
-    exec { 'Install ElasticHQ Plugin':
-    command => '/usr/share/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ',
-    cwd => "/usr/share/elasticsearch/bin",
-    path => ["/bin", "/usr/bin"]
-    }        
-
-*/
-
     class { 'logstash':
         manage_repo  => true,
         repo_version => '1.4',
         autoupgrade => true,
-        status => disabled,
-        java_install => true
+        status => enabled,
+        java_install => true,
+        install_contrib => true
     }   
      
 package { 'git':

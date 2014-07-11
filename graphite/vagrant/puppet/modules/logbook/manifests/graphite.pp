@@ -7,12 +7,13 @@ wget::fetch { 'grafana-download':
     timeout     => 0,
     verbose     => false,
 }  
-->
+~>
 exec { 'grafana-untar':
-    creates => "/home/vagrant/grafana-1.6.1",
-    cwd => "/home/vagrant",
-    command => "tar xzf grafana-1.6.1.tar.gz",
-    path    => ["/usr/bin", "/bin"],
+    refreshonly => true,
+    creates     => "/home/vagrant/grafana-1.6.1",
+    cwd         => "/home/vagrant",
+    command     => "tar xzf grafana-1.6.1.tar.gz",
+    path        => ["/usr/bin", "/bin"],
 }
    
 /*
@@ -72,10 +73,6 @@ exec { "install-graphite-webapp":
     require => [
         Vcsrepo['/home/vagrant/graphite-project/graphite-web'],
         Exec['install-graphite-carbon'],
-        Package['python-cairo-dev'],
-        Package['python-django'],
-        Package['python-django-tagging'],
-        Package['python-twisted']
             ],
     path    => ["/usr/bin", "/usr/sbin"]
 }

@@ -13,3 +13,5 @@ puppet module install elasticsearch-logstash
 
 ln -sf /vagrant/puppet/modules/logbook /etc/puppet/modules/
 ln -sf /vagrant/puppet/manifests/site.pp /etc/puppet/manifests/site.pp
+
+puppet apply /etc/puppet/manifests/site.pp

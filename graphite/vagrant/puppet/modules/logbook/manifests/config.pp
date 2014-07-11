@@ -10,6 +10,9 @@ elasticsearch::plugin{'lmenezes/elasticsearch-kopf':
         instances    => 'elastic-sample',
     }
 
+logstash::configfile { 'kibana_config':
+  content => template('logbook/kibana.config')
+}
 
 file { "/opt/graphite/conf/carbon.conf":
     ensure => file,
@@ -33,8 +36,9 @@ file { '/opt/graphite/webapp/graphite/local_settings.py':
 }
 
 file { "/etc/apache2/sites-available/graphite-vhost.conf":
-    ensure => file,
-    source => "/vagrant/graphite/graphite-vhost.conf",
+    ensure  => file,
+    source  => "/vagrant/graphite/graphite-vhost.conf",
+    notify  => Service["apache2"]
     }
 
 file { '/home/vagrant/grafana-1.6.1/config.js':
@@ -56,18 +60,19 @@ file { '/opt/graphite/storage':
 }
 ~>
 exec { 'chown':
-    command => 'chown -R www-data:www-data /opt/graphite/storage/log/webapp',
-    path    => ["/bin"]
+    refreshonly => true,
+    command     => 'chown -R www-data:www-data /opt/graphite/storage/log/webapp',
+    path        => ["/bin"]
 }    
 
 file { "/etc/apache2/sites-enabled/001-graphite":
-    ensure => link,
-    target => "/etc/apache2/sites-available/graphite-vhost.conf",
+    ensure  => link,
+    target  => "/etc/apache2/sites-available/graphite-vhost.conf",
     notify  => Service["apache2"]
 }
 
 file { "/etc/apache2/sites-enabled/000-default":
-    ensure => absent,
+    ensure  => absent,
     notify  => Service["apache2"]
 }
 
