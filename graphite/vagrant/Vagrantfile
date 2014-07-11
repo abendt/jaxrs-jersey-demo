@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  
+  # https://vagrantcloud.com/zauberpony/wheezy64
+  config.vm.box = "zauberpony/wheezy64"
+  config.vm.box_check_update = false
+  
+  # https://coderwall.com/p/qtbi5a
+  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
+  
+  config.vm.provision "shell", path: "bootstrap.sh"
+
+  #config.vm.provision "puppet" do |puppet|
+  #  puppet.manifests_path = "puppet"
+  #  puppet.manifest_file  = "site.pp"
+  #end
+
+  config.vm.network "forwarded_port", guest: 80,    host: 9090
+  config.vm.network "forwarded_port", guest: 2003,  host: 2003
+  config.vm.network "forwarded_port", guest: 9200,  host: 9200
+end
