@@ -47,7 +47,7 @@ public class MyResourceTest {
     @Test
     public void shouldBeAbleToInvokeServletInDeployedWebApp() throws Exception {
         Client c = ClientBuilder.newClient();
-        WebTarget target = c.target(baseURL + "/webapi");
+        WebTarget target = c.target(baseURL + "/rest");
         String responseMsg = target.path("myresource").request().get(String.class);
         Assert.assertEquals("Got it!", responseMsg);
     }

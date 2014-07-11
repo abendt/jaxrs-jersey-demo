@@ -10,7 +10,18 @@
 
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
-        <url-pattern>/webapi/*</url-pattern>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <display-name>HystrixMetricsStreamServlet</display-name>
+        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
+        <servlet-class>com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>HystrixMetricsStreamServlet</servlet-name>
+        <url-pattern>/hystrix.stream</url-pattern>
     </servlet-mapping>
 
 </web-app>
