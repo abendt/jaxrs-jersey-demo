@@ -77,6 +77,15 @@ package {'sqlite3':
     
 package { 'fontconfig':
     ensure => installed,
-    }             
+    }      
+        
+class { 'python':
+  version    => 'system',
+  pip        => true,
+}
+
+python::pip { 'elasticsearch-curator':
+  pkgname       => 'elasticsearch-curator',
+}               
 
 }

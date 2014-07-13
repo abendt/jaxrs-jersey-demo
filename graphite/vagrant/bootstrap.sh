@@ -10,6 +10,7 @@ puppet module install maestrodev-wget
 puppet module install puppetlabs-apt
 puppet module install elasticsearch-elasticsearch
 puppet module install elasticsearch-logstash
+puppet module install stankevich-python
 
 ln -sf /vagrant/puppet/modules/logbook /etc/puppet/modules/
 ln -sf /vagrant/puppet/manifests/site.pp /etc/puppet/manifests/site.pp
