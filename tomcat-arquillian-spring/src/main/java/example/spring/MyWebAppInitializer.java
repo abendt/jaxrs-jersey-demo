@@ -26,15 +26,6 @@ public class MyWebAppInitializer implements WebApplicationInitializer {
         // The following line is required to avoid having jersey-spring3 registering it's own Spring root context.
         container.setInitParameter("contextConfigLocation", "");
 
-        // Create the dispatcher servlet's Spring application context
-//        AnnotationConfigWebApplicationContext dispatcherContext =
-//                new AnnotationConfigWebApplicationContext();
-//
-//        // Register and map the dispatcher servlet
-//        ServletRegistration.Dynamic dispatcher =
-//                container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
-//        dispatcher.setLoadOnStartup(1);
-//        dispatcher.addMapping("/");
     }
 
 }
