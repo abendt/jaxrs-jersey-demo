@@ -1,18 +1,48 @@
 class logbook::install {
-  
-  wget::fetch { 'kibana-download':
-    source => 'http://download.elasticsearch.org/kibana/kibana/kibana-latest.tar.gz',
-    destination => '/home/vagrant/kibana-latest.tar.gz',
-    timeout     => 0,
-    verbose     => false,
- }
- ->
- exec {'kibana-untar':
-    creates     => "/home/vagrant/kibana-latest",
-    cwd         => "/home/vagrant",
-    command     => "tar xzf kibana-latest.tar.gz",
-    path        => ["/usr/bin", "/bin"],
-    }   
+
+    file {'/opt/download':
+      ensure  => directory
+    }
+
+    wget::fetch { 'kibana-download':
+        source => 'http://download.elasticsearch.org/kibana/kibana/kibana-latest.tar.gz',
+        destination => '/opt/download/kibana-latest.tar.gz',
+        timeout     => 0,
+        verbose     => false,
+    }
+    ~>
+    exec {'kibana-untar':
+        refreshonly => true,
+        creates     => "/opt/kibana-latest",
+        cwd         => "/opt",
+        command     => "tar xzf /opt/download/kibana-latest.tar.gz",
+        path        => ["/usr/bin", "/bin"],
+    }
+    ->
+    file { "/opt/kibana":
+      ensure  => link,
+      target  => "/opt/kibana-latest",
+    }
+
+    wget::fetch { 'grafana-download':
+        source => 'http://grafanarel.s3.amazonaws.com/grafana-1.6.1.tar.gz',
+        destination => '/opt/download/grafana-1.6.1.tar.gz',
+        timeout     => 0,
+        verbose     => false,
+    }  
+    ~>
+    exec { 'grafana-untar':
+        refreshonly => true,
+        creates     => "/opt/grafana-1.6.1",
+        cwd         => "/opt",
+        command     => "tar xzf /opt/download/grafana-1.6.1.tar.gz",
+        path        => ["/usr/bin", "/bin"],
+    }
+    ->
+    file { "/opt/grafana":
+      ensure  => link,
+      target  => "/opt/grafana-1.6.1",
+    }
 
     class { 'elasticsearch':
         manage_repo  => true,
@@ -29,63 +59,10 @@ class logbook::install {
         status => enabled,
         java_install => true,
         install_contrib => true
-    }   
-     
-package { 'git':
-      ensure => installed,
-    }
-    
-package { 'python-cairo-dev':
-    ensure => installed,
-    }
-    
-package { 'python-django':
-    ensure => installed,
-    }
-    
-package { 'python-django-tagging':
-    ensure => installed,
-    }   
-    
-package { 'python-twisted':
-    ensure => installed,
-    }  
-    
-package { 'apache2':
-    ensure => installed,
     }    
-    
-package { 'libapache2-mod-wsgi':
-    ensure => installed,
-    }    
-    
-package { 'libapache2-mod-python':
-    ensure => installed,
-    }  
-    
-package {'expect':
-    ensure => installed,
-    }        
-    
-package {'python-pysqlite2':
-    ensure => installed,
-    }
-    
-package {'sqlite3':
-    ensure => installed,
-    }  
-    
-package { 'fontconfig':
-    ensure => installed,
-    }      
-        
-class { 'python':
-  version    => 'system',
-  pip        => true,
-}
 
-python::pip { 'elasticsearch-curator':
-  pkgname       => 'elasticsearch-curator',
-}               
+    python::pip { 'elasticsearch-curator':
+        pkgname       => 'elasticsearch-curator',
+    }               
 
 }

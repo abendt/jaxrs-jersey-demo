@@ -36,15 +36,15 @@
 # Copyright 2014 Your name here, unless otherwise noted.
 #
 class logbook {
-
-    include 'logbook::install'
-    include 'logbook::graphite'
-    include 'logbook::config'
-    include 'logbook::service'
+ 
+   include 'logbook::install'
+   include 'logbook::install-graphite'
+   include 'logbook::config'
+   include 'logbook::service'
    
-    Class[Logbook::Install]     ->
-    Class[Logbook::Graphite]    ->
-    Class[Logbook::Config]      ->
-    Class[Logbook::Service]
+   Class[Logbook::Install]          ->
+   Class[Logbook::Install-graphite] ->
+   Class[Logbook::Config]           ->
+   Class[Logbook::Service]
    
 }

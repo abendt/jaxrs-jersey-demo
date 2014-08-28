@@ -6,27 +6,27 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
-  # https://vagrantcloud.com/zauberpony/wheezy64
-  config.vm.box = "zauberpony/wheezy64"
-  config.vm.box_check_update = false
+  config.vm.define "logbox" do |logbox|
+    # https://vagrantcloud.com/zauberpony/wheezy64
+    logbox.vm.box = "zauberpony/wheezy64"
+    logbox.vm.box_check_update = false
   
-  # https://coderwall.com/p/qtbi5a
-  config.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"
-  
-  config.vm.provision "shell", path: "bootstrap.sh"
+    # https://coderwall.com/p/qtbi5a
+    logbox.ssh.shell = "bash -c 'BASH_ENV=/etc/profile exec bash'"  
+    logbox.vm.provision "shell", path: "bootstrap.sh"
 
-  # Apache
-  config.vm.network "forwarded_port", guest: 80,    host: 9090
+    # Apache
+    logbox.vm.network "forwarded_port", guest: 80,    host: 9090
   
-  # Graphite
-  config.vm.network "forwarded_port", guest: 2003,  host: 2003
+    # Graphite
+    logbox.vm.network "forwarded_port", guest: 2003,  host: 2003
   
-  # ElasticSearch
-  config.vm.network "forwarded_port", guest: 9200,  host: 9200
-  
-  # Logstash
-  config.vm.network "forwarded_port", guest: 5000,  host: 5000
+    # ElasticSearch
+    logbox.vm.network "forwarded_port", guest: 9200,  host: 9200
 
-  config.vm.network "private_network", ip: "192.168.50.4"
+    # Logstash
+    logbox.vm.network "forwarded_port", guest: 5000,  host: 5000
+    logbox.vm.network "private_network", ip: "192.168.100.10"
+  end
 
 end
