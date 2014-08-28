@@ -4,16 +4,16 @@ function checkThatFirstBootIsNotRunning
 {
     echo "a boot script is run on first boot which locks the apt infrastructure"
     echo "need to wait here for completion so we can proceed with our installation"
-    echo 
-    
+
     while :
     do
         RESULT=`pgrep -f firstboot`
 
         if [ "${RESULT:-null}" = null ]; then
+            echo
             return 0
         else
-            echo "waiting 5sec for firstboot process ${RESULT} to finish ..."
+            echo -n "."
         fi
         sleep 5
     done    
