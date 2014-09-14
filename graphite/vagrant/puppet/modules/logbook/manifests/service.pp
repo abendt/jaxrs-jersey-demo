@@ -1,7 +1,7 @@
 class logbook::service {
 
     cron { 'elasticsearch-curator':
-        command => "/usr/local/bin/curator delete --older-than 60 2&>1 | /bin/nc localhost 28778",
+        command => "curator --logformat logstash delete --older-than 30 2>&1 | sed -e 's/ function\"/ \"function\"/'| nc localhost 28778 -q 1",
         user    => root,
         hour    => 2,
         minute  => 0
