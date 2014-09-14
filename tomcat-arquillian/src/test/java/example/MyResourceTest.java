@@ -30,8 +30,8 @@ public class MyResourceTest {
         File[] files = Maven.resolver()
                 .offline()
                 .loadPomFromFile("pom.xml")
-                .resolve("org.glassfish.jersey.containers:jersey-container-servlet-core",
-                        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider"
+                .resolve("org.glassfish.jersey.containers:jersey-container-servlet-core:2.6",
+                        "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider:2.3.1"
                 )
                 .withTransitivity()
                 .asFile();

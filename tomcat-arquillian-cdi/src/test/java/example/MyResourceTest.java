@@ -35,7 +35,7 @@ public class MyResourceTest {
                 .resolve("org.glassfish.jersey.containers:jersey-container-servlet-core",
                         "com.fasterxml.jackson.jaxrs:jackson-jaxrs-json-provider",
                         "org.jboss.weld.servlet:weld-servlet",
-                        "org.glassfish.jersey.containers.glassfish:jersey-gf-cdi:2.5.1-tomcatpatch"
+                        "org.glassfish.jersey.containers.glassfish:jersey-gf-cdi"
                 )
                 .withTransitivity()
                 .asFile();
@@ -49,8 +49,6 @@ public class MyResourceTest {
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
                 .addAsManifestResource("META-INF/context.xml", "context.xml")
                 .setWebXML("in-container-web.xml");
-
-        System.out.println(webArchive.toString(true));
 
         return webArchive;
     }
